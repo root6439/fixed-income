@@ -13,4 +13,11 @@ export const routes: Routes = [
         (m) => m.CreateFixedIncomeComponent
       ),
   },
+  {
+    path: 'create/:id',
+    loadComponent: () =>
+      import('./pages/create-fixed-income/create-fixed-income.component').then(
+        (m) => m.CreateFixedIncomeComponent
+      ),
+  },
 ];
