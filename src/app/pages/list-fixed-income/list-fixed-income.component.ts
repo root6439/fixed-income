@@ -39,7 +39,7 @@ export class ListFixedIncomeComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    // this.getData();
+    this.getData();
   }
 
   getData() {

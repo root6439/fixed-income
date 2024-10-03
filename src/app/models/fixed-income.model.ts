@@ -1,16 +1,12 @@
+import { ItemInfo } from './item-info.model';
+
 export class FixedIncome {
   id: number;
   descricao: string;
   dataValidade: string;
   investimentoMinimo: number;
   tipoProdutoId: number;
-  tipoProduto: {
-    id: number;
-    nome: string;
-  };
+  tipoProduto: ItemInfo;
   indexadorId: number;
-  indexador: {
-    id: number;
-    nome: string;
-  };
+  indexador: ItemInfo;
 }

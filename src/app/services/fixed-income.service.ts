@@ -29,4 +29,9 @@ export class FixedIncomeService {
   delete(id: number) {
     return this.http.delete<FixedIncome>(`${this.serverUrl}/${id}`);
   }
+
+  getProductType() {
+    return this.http.get<FixedIncome[]>(this.serverUrl);
+
+  }
 }

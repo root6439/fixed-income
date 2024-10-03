@@ -1,1 +1,65 @@
-<p>create-fixed-income works!</p>
+<div class="w-50 m-auto">
+  <h1>Cadastro de renda-fixa</h1>
+
+  <form [formGroup]="formFixedIncome">
+    <mat-form-field appearance="fill">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="description" />
+      @if(getControl('description').getError('required')) {
+      <mat-error>Campo obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Data de validade</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="validDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      @if(getControl('validDate').getError('required')) {
+      <mat-error>Campo obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Investimento mínimo</mat-label>
+      <input matInput formControlName="minInvestment" type="number" />
+      <span matTextPrefix>R$&nbsp;</span>
+      @if(getControl('minInvestment').getError('required')) {
+      <mat-error>Campo obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo do produto</mat-label>
+      <input matInput formControlName="productType" [matAutocomplete]="autoProdType" (ngModelChange)="getIndexers($event.id)" />
+      <mat-autocomplete [displayWith]="displayFn" #autoProdType="matAutocomplete">
+        @for (option of productTypes$ | async; track option) {
+        <mat-option [value]="option">{{ option.nome }}</mat-option>
+        }
+      </mat-autocomplete>
+      @if(getControl('productType').getError('required')) {
+      <mat-error>Campo obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Indexador</mat-label>
+      <input matInput formControlName="indexer" [matAutocomplete]="autoIndexer" />
+      <mat-autocomplete [displayWith]="displayFn" #autoIndexer="matAutocomplete">
+        @for (option of indexers$ | async; track option) {
+        <mat-option [value]="option">{{ option.nome }}</mat-option>
+        }
+      </mat-autocomplete>
+      @if(getControl('indexer').getError('required')) {
+      <mat-error>Campo obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="d-flex gap-2">
+      <button mat-flat-button type="submit" [disabled]="formFixedIncome.invalid">Cadastrar</button>
+      <button mat-stroked-button type="reset">Limpar</button>
+      <button mat-button type="button">Cancelar</button>
+    </div>
+  </form>
+</div>
