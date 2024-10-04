@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { FixedIncome } from '../../models/fixed-income.model';
 import { FixedIncomeService } from '../../services/fixed-income.service';
@@ -8,6 +8,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { Store } from '../../store/Store';
+import { FixedIncomeStore } from '../../store/fixed-income-store.service';
 
 @Component({
   selector: 'app-list-fixed-income',
@@ -24,9 +26,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './list-fixed-income.component.scss',
 })
 export class ListFixedIncomeComponent implements OnInit {
-  private _service = inject(FixedIncomeService);
+  private _store = inject(FixedIncomeStore);
 
-  fixedIncomes$: Observable<FixedIncome[]>;
+  fixedIncomes$ = this._store.state$;
 
   displayedColumns = [
     'id',
@@ -39,10 +41,6 @@ export class ListFixedIncomeComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.getData();
-  }
-
-  getData() {
-    this.fixedIncomes$ = this._service.getList();
+    this._store.getList();
   }
 }
