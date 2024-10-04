@@ -10,6 +10,8 @@ import { FixedIncomeStore } from '../../store/fixed-income-store.service';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { SearchFilterComponent } from '../../components/search-filter/search-filter.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../../components/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-list-fixed-income',
@@ -23,7 +25,7 @@ import { SearchFilterComponent } from '../../components/search-filter/search-fil
     RouterLink,
     MatPaginatorModule,
     MatSortModule,
-    SearchFilterComponent
+    SearchFilterComponent,
   ],
   templateUrl: './list-fixed-income.component.html',
   styleUrl: './list-fixed-income.component.scss',
@@ -33,6 +35,7 @@ export class ListFixedIncomeComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   private _store = inject(FixedIncomeStore);
+  readonly dialog = inject(MatDialog);
 
   dataSource: MatTableDataSource<FixedIncome>;
 
@@ -61,5 +64,17 @@ export class ListFixedIncomeComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  openDialog(data: FixedIncome) {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      data,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._store.delete(data.id);
+      }
+    });
   }
 }

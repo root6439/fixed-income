@@ -70,14 +70,12 @@ export class FixedIncomeStore extends Store<FixedIncome> {
     });
   }
 
+  // endpoint não retorna o objeto atualizado, necessário fazer um request pra pegar uma lista atualizada
   update(fixedIncome: FixedIncomePutRequest) {
     this._service.put(fixedIncome).subscribe({
-      next: (updateValue) => {
-        const newState = this._originalState.map((value) =>
-          value.id == fixedIncome.id ? { ...value, ...updateValue } : value
-        );
-
-        this.setState(newState);
+      next: () => {
+        this._originalState = [];
+        this.getList();
       },
     });
   }
@@ -86,6 +84,7 @@ export class FixedIncomeStore extends Store<FixedIncome> {
     this._service.delete(id).subscribe({
       next: () => {
         const newState = this._originalState.filter((value) => value.id != id);
+        this._originalState = newState;
         this.setState(newState);
       },
     });

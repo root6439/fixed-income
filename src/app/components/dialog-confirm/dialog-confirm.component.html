@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Excluir renda-fixa</h2>
+<mat-dialog-content>
+  Você está prestes a excluir a renda-fixa <b>{{ data.descricao }}</b
+  >, essa ação não poderá ser desfeita.
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true">Excluir</button>
+</mat-dialog-actions>
