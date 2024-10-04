@@ -6,6 +6,7 @@ import {
   FixedIncomePostRequest,
   FixedIncomePutRequest,
 } from '../models/fixed-income-request.model';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class FixedIncomeStore extends Store<FixedIncome> {
     super([]);
   }
 
-  getList() {
+  getList(id?: number) {
     if (this.state.length > 0) {
       return;
     }
@@ -25,6 +26,14 @@ export class FixedIncomeStore extends Store<FixedIncome> {
     this._service.getList().subscribe({
       next: (value) => this.setState(value),
     });
+  }
+
+  getById(id: number) {
+    if (this.state.length > 0) {
+      return of(this.state.find((value) => value.id == id));
+    }
+
+    return this._service.getById(id);
   }
 
   create(fixedIncome: FixedIncomePostRequest) {

@@ -1,7 +1,7 @@
 <div class="w-50 m-auto">
   <h1>Cadastro de renda-fixa</h1>
 
-  <form [formGroup]="formFixedIncome" (ngSubmit)="create()">
+  <form [formGroup]="formFixedIncome" (ngSubmit)="submit()">
     <mat-form-field appearance="fill">
       <mat-label>Descrição</mat-label>
       <input matInput formControlName="description" />

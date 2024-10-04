@@ -1,8 +1,8 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import { Component, Inject, inject, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { FixedIncome } from '../../models/fixed-income.model';
 import { FixedIncomeService } from '../../services/fixed-income.service';
-import { finalize, Observable } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { Store } from '../../store/Store';
 import { FixedIncomeStore } from '../../store/fixed-income-store.service';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 @Component({
   selector: 'app-list-fixed-income',
@@ -21,14 +23,19 @@ import { FixedIncomeStore } from '../../store/fixed-income-store.service';
     MatIconModule,
     MatButtonModule,
     RouterLink,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   templateUrl: './list-fixed-income.component.html',
   styleUrl: './list-fixed-income.component.scss',
 })
 export class ListFixedIncomeComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   private _store = inject(FixedIncomeStore);
 
-  fixedIncomes$ = this._store.state$;
+  dataSource: MatTableDataSource<FixedIncome>;
 
   displayedColumns = [
     'id',
@@ -41,6 +48,19 @@ export class ListFixedIncomeComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this._store.state$.subscribe({
+      next: (value) => {
+        this.dataSource = new MatTableDataSource(value);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+    });
+
     this._store.getList();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }
