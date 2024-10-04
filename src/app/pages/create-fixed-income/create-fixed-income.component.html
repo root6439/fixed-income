@@ -59,9 +59,11 @@
     </mat-form-field>
 
     <div class="d-flex gap-2">
-      <button mat-flat-button type="submit" [disabled]="formFixedIncome.invalid">Cadastrar</button>
+      <button mat-flat-button type="submit" [disabled]="formFixedIncome.invalid">
+        {{ fixedIncomeId ? "Atualizar" : "Cadastrar" }}
+      </button>
       <button mat-stroked-button type="reset">Limpar</button>
-      <button mat-button type="button">Cancelar</button>
+      <button mat-button type="button" [routerLink]="['/']">Cancelar</button>
     </div>
   </form>
 </div>

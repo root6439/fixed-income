@@ -7,12 +7,14 @@ import {
   FixedIncomePutRequest,
 } from '../models/fixed-income-request.model';
 import { of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FixedIncomeStore extends Store<FixedIncome> {
   private _service = inject(FixedIncomeService);
+  readonly toastr = inject(ToastrService);
 
   constructor() {
     super([]);
@@ -66,6 +68,7 @@ export class FixedIncomeStore extends Store<FixedIncome> {
       next: () => {
         this._originalState = [];
         this.getList();
+        this.toastr.success('Renda-fixa criada!');
       },
     });
   }
@@ -76,6 +79,7 @@ export class FixedIncomeStore extends Store<FixedIncome> {
       next: () => {
         this._originalState = [];
         this.getList();
+        this.toastr.success('Renda-fixa atualizada!');
       },
     });
   }
@@ -86,6 +90,7 @@ export class FixedIncomeStore extends Store<FixedIncome> {
         const newState = this._originalState.filter((value) => value.id != id);
         this._originalState = newState;
         this.setState(newState);
+        this.toastr.success('Renda-fixa excluída!');
       },
     });
   }

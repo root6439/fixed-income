@@ -14,6 +14,7 @@ import {
   FixedIncomePutRequest,
 } from '../../models/fixed-income-request.model';
 import { FixedIncomeStore } from '../../store/fixed-income-store.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-create-fixed-income',
@@ -26,6 +27,7 @@ import { FixedIncomeStore } from '../../store/fixed-income-store.service';
     MatDatepickerModule,
     CommonModule,
     MatAutocompleteModule,
+    RouterLink,
   ],
   templateUrl: './create-fixed-income.component.html',
   styleUrl: './create-fixed-income.component.scss',
@@ -104,7 +106,7 @@ export class CreateFixedIncomeComponent implements OnInit {
     const date = this.getControl('validDate').value as Date;
 
     console.log(date);
-    
+
     const request: FixedIncomePutRequest = {
       id: this.fixedIncomeId,
       descricao: description.value,
@@ -115,8 +117,6 @@ export class CreateFixedIncomeComponent implements OnInit {
       indexadorId: indexer.value?.id,
       tipoProdutoId: productType?.value?.id,
     };
-
-    
 
     this._fixedIncomeStore.update(request);
   }
