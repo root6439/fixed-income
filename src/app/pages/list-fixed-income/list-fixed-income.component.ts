@@ -1,17 +1,15 @@
-import { Component, Inject, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { FixedIncome } from '../../models/fixed-income.model';
-import { FixedIncomeService } from '../../services/fixed-income.service';
-import { finalize, map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { Store } from '../../store/Store';
 import { FixedIncomeStore } from '../../store/fixed-income-store.service';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { SearchFilterComponent } from '../../components/search-filter/search-filter.component';
 
 @Component({
   selector: 'app-list-fixed-income',
@@ -25,6 +23,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
     RouterLink,
     MatPaginatorModule,
     MatSortModule,
+    SearchFilterComponent
   ],
   templateUrl: './list-fixed-income.component.html',
   styleUrl: './list-fixed-income.component.scss',

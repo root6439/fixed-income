@@ -4,6 +4,8 @@
   <button mat-flat-button color="primary" [routerLink]="['create']">Cadastrar</button>
 </div>
 
+<app-search-filter />
+
 <table mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
