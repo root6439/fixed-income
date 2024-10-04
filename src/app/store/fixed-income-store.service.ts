@@ -59,9 +59,14 @@ export class FixedIncomeStore extends Store<FixedIncome> {
     return this._service.getById(id);
   }
 
+  // A API não está retornando o novo objeto cadastrado no DB, infelizmente vou ter que puxar uma lista atualizada do servidor
+  // ao invés de apenas inserir o novo item ao state
   create(fixedIncome: FixedIncomePostRequest) {
     this._service.post(fixedIncome).subscribe({
-      next: (newValue) => this.setState([...this._originalState, newValue]),
+      next: () => {
+        this._originalState = [];
+        this.getList();
+      },
     });
   }
 

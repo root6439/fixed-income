@@ -50,6 +50,10 @@ export class CreateFixedIncomeComponent implements OnInit {
 
   @Input()
   set id(id: string) {
+    if (!id) {
+      return;
+    }
+
     this.fixedIncomeId = Number(id);
     this._fixedIncomeStore.getById(this.fixedIncomeId).subscribe({
       next: (value) => {
